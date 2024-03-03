@@ -3,16 +3,21 @@ let routertask = express.Router()
 let tasks = require("../data/tasks")
 
 routertask.get("/", (request, respond) => {
-    let text = request.query.text
-
-    if (text != undefined){
-        let taskWithText = tasks.filter( task => task.text.indexOf(text) != -1)
-        respond.send(taskWithText)
-        return
-    }
-    respond.send(tasks)
+    respond.render("pageTasks", {
+        message: "ejemplo"
+    })
 })
 
+routertask.post("/tasks/:id", (request, respond) => {
+    let id = request.body.id
+    let task = task.find( (t) => t.id = id)
+
+    if (task == undefined){
+        respond.send("Error")
+        return
+    }
+    respond.send(task)
+})
 
 routertask.get("/tasks/:id", (request, respond) => {
     let id = request.params.id
